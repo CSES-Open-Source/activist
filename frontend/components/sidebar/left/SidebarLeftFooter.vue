@@ -1,6 +1,9 @@
 <template>
   <footer
     class="w-full p-1 transition-all duration-500 bg-light-distinct dark:bg-dark-distinct"
+    :class="{
+      'shadow-[rgba(0,0,15,0.5)_-10px_5px_10px_10px]': hasBottom,
+    }"
   >
     <div
       class="flex flex-col justify-center w-full p-1 space-y-1 rounded-md bg-light-header dark:bg-dark-header elem-shadow-sm"
@@ -84,6 +87,8 @@ type DisclosureButtonType = {
 const disclosureButtons = ref<DisclosureButtonType[]>([]);
 
 const disclosurePanels = ref<(Element | ComponentPublicInstance | null)[]>([]);
+
+const { hasBottom } = defineProps(["hasBottom"]);
 
 const closeOtherMenus = (id: number) => {
   disclosureButtons.value

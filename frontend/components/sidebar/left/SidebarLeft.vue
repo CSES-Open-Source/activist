@@ -14,7 +14,7 @@
       'w-16': sidebar.collapsed && sidebar.collapsedSwitch == true,
     }"
   >
-    <SidebarLeftHeader @toggle-pressed="setContentScrollable()" />
+    <SidebarLeftHeader :hasTop="topShadow" @toggle-pressed="setContentScrollable()" />
     <div
       ref="content"
       class="h-full overflow-x-hidden"
@@ -43,7 +43,7 @@
         :filters="getFiltersByPageType"
       />
     </div>
-    <SidebarLeftFooter />
+    <SidebarLeftFooter :hasBottom="bottomShadow"/>
   </aside>
 </template>
 
@@ -294,10 +294,28 @@ const getFiltersByPageType = computed(() => {
 
 const content = ref();
 const contentScrollable = ref(false);
+const topShadow = ref(false);
+const bottomShadow = ref(false);
 
 function setContentScrollable(): void {
   contentScrollable.value =
     content.value.scrollHeight > content.value.clientHeight ? true : false;
+  isTop();
+  isBottom();
+}
+
+function isTop(): void {
+  if (contentScrollable) {
+    topShadow.value = 
+      !(content.value.scrollTop === 0);
+  }
+}
+
+function isBottom(): void {
+  if (contentScrollable) {
+    bottomShadow.value = 
+      !(content.value.scrollHeight - content.value.clientHeight === content.value.scrollTop) && !(sidebar.collapsed && sidebar.collapsedSwitch);
+  }
 }
 
 onMounted(() => {

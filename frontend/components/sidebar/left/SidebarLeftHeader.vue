@@ -1,6 +1,9 @@
 <template>
   <header
     class="w-full pl-1 transition-all duration-500 bg-light-distinct dark:bg-dark-distinct"
+    :class="{
+      'drop-shadow-2xl': hasTop,
+    }"
   >
     <div class="flex items-center pt-3 pb-2 pl-[0.85rem] pr-6">
       <div
@@ -61,8 +64,10 @@
 </template>
 
 <script setup lang="ts">
+
 const sidebar = useSidebar();
 const emit = defineEmits(["toggle-pressed"]);
+const { hasTop } = defineProps(["hasTop"]);
 </script>
 
 <style>
